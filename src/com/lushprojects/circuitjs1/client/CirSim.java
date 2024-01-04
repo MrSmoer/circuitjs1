@@ -27,6 +27,7 @@ package com.lushprojects.circuitjs1.client;
 import java.util.Vector;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -223,6 +224,7 @@ MouseOutHandler, MouseWheelHandler {
     static final int HINT_3DB_L = 5;
     Vector<CircuitElm> elmList;
     Vector<Adjustable> adjustables;
+    EnumMap<ReferenceDesignator, Vector<CircuitElm>> designatedComponents;
     // Vector setupList;
     CircuitElm dragElm, menuElm, stopElm;
     CircuitElm elmArr[];
@@ -3987,6 +3989,8 @@ MouseOutHandler, MouseWheelHandler {
 			System.out.println("unrecognized dump type: " + type);
 			break;
 		    }
+		    ReferenceDesignator designator = null;
+		    String designatorSuffix = "";
 		    /*
 		     * debug code to check if allocNodes() is called in constructor.  It gets called in
 		     * setPoints() but that doesn't get called for subcircuits.
@@ -3995,6 +3999,16 @@ MouseOutHandler, MouseWheelHandler {
 		    if (vv.length != vc)
 			console("allocnodes not called! " + tint);
 		     */
+		    if (designator != null) {
+			Vector<CircuitElm> desigTypeElems = designatedComponents.get(designator);
+			
+			if (designatorSuffix == "") {
+			    designatorSuffix = DesignatorManager.getNextDesignatorSuffix(desigTypeElems);
+			}
+			newce.setDesignatorSuffix(designatorSuffix);
+			designatedComponents.get(designator).addElement(newce);
+		    }
+		    
 		    newce.setPoints();
 		    elmList.addElement(newce);
 		} catch (Exception ee) {

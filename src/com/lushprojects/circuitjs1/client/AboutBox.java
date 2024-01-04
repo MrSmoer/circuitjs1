@@ -48,7 +48,8 @@ public class AboutBox extends PopupPanel {
 		vp.add(okButton = new Button("OK"));
 		okButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				close();
+				System.out.println("hello");
+			    close();
 			}
 		});
 		center();

@@ -24,11 +24,14 @@ import com.lushprojects.circuitjs1.client.util.Locale;
 
     class ResistorElm extends CircuitElm {
 	double resistance;
+	String name;
 	public ResistorElm(int xx, int yy) { super(xx, yy); resistance = 1000; }
 	public ResistorElm(int xa, int ya, int xb, int yb, int f,
 		    StringTokenizer st) {
 	    super(xa, ya, xb, yb, f);
 	    resistance = new Double(st.nextToken()).doubleValue();
+	    if(st.hasMoreElements())
+	    name = st.nextToken();
 	}
 	int getDumpType() { return 'r'; }
 	String dump() {
@@ -84,6 +87,9 @@ import com.lushprojects.circuitjs1.client.util.Locale;
 	    g.context.restore();
 	    if (sim.showValuesCheckItem.getState()) {
 		String s = getShortUnitText(resistance, "");
+		if (name != null) {
+		    s = name+": "+s;
+		}
 		drawValues(g, s, hs+2);
 	    }
 	    doDots(g);

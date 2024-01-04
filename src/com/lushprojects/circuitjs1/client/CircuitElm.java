@@ -81,6 +81,9 @@ public abstract class CircuitElm implements Editable {
     // lead points (ends of wire stubs for simple two-terminal elements)  
     Point lead1, lead2;
     
+    ReferenceDesignator designator = null;
+    String designatorSuffix = "";
+    
     // voltages at each node
     double volts[];
     
@@ -199,6 +202,11 @@ public abstract class CircuitElm implements Editable {
     // create element between xa,ya and xb,yb from undump
     CircuitElm(int xa, int ya, int xb, int yb, int f) {
 	x = xa; y = ya; x2 = xb; y2 = yb; flags = f;
+	allocNodes();
+	initBoundingBox();
+    }
+    CircuitElm(int xa, int ya, int xb, int yb, int f, ReferenceDesignator d, String dSuffix) {
+	x = xa; y = ya; x2 = xb; y2 = yb; flags = f; designator = d; designatorSuffix = dSuffix;
 	allocNodes();
 	initBoundingBox();
     }
@@ -968,6 +976,13 @@ public abstract class CircuitElm implements Editable {
         String info[] = new String[10];
         getInfo(info);
         return info[0];
+    }
+    
+    String getDesignatorSuffix() {
+	return this.designatorSuffix;
+    }
+    void setDesignatorSuffix(String suffix) {
+	this.designatorSuffix = suffix;
     }
     
     Color getVoltageColor(Graphics g, double volts) {
