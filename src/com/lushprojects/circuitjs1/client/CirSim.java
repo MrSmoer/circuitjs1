@@ -3967,7 +3967,7 @@ MouseOutHandler, MouseWheelHandler {
 			break;
 		    }
 		    if (tint == 38) {
-			Adjustable adj = new Adjustable(st, this);
+			AdjustableScroll adj = new AdjustableScroll(st, this);
 			if (adj.elm != null)
 			    adjustables.add(adj);
 			break;
@@ -4012,7 +4012,7 @@ MouseOutHandler, MouseWheelHandler {
 	if ((flags & RC_RETAIN) == 0) {
 	    // create sliders as needed
 	    for (i = 0; i < adjustables.size(); i++) {
-		if (!adjustables.get(i).createSlider(this))
+		if (!adjustables.get(i).createElement(this))
 		    adjustables.remove(i--);
 	    }
 	}
@@ -4036,7 +4036,7 @@ MouseOutHandler, MouseWheelHandler {
 	for (i = adjustables.size()-1; i >= 0; i--) {
 	    Adjustable adj = adjustables.get(i);
 	    if (adj.elm == elm) {
-		adj.deleteSlider(this);
+		adj.delete(this);
 		adjustables.remove(i);
 	    }
 	}
@@ -4381,8 +4381,12 @@ MouseOutHandler, MouseWheelHandler {
     			ce.setMouseElm(true);
     		mouseElm=ce;
     		int i;
-    		for (i = 0; i < adjustables.size(); i++)
-    		    adjustables.get(i).setMouseElm(ce);
+    		for (i = 0; i < adjustables.size(); i++) {
+    		    AdjustableScroll scr; 
+    		    // TODO does this work?
+    		    if((scr = (AdjustableScroll)adjustables.get(i)) instanceof AdjustableScroll)
+    			scr.setMouseElm(ce);
+    		}
     	}
     }
 
