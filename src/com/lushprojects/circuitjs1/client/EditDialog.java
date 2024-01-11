@@ -128,6 +128,13 @@ class EditDialog extends Dialog {
 						itemStateChanged(e);
 					}
 				});
+			} else if (ei.checkbox2 != null){
+			    vp.insert(ei.checkbox2, idx);
+			    ei.checkbox2.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+				public void onValueChange(ValueChangeEvent<Boolean> e){
+					itemStateChanged(e);
+				}
+			    });
 			} else if (ei.button != null) {
 			    vp.insert(ei.button, idx);
 			    if (ei.loadFile != null) {
@@ -276,7 +283,7 @@ class EditDialog extends Dialog {
 	    boolean applied = false;
 	    for (i = 0; i != einfocount; i++) {
 		EditInfo ei = einfos[i];
-		if (ei.choice == src || ei.checkbox == src || ei.button == src) {
+		if (ei.choice == src || ei.checkbox == src || ei.checkbox2 == src || ei.button == src) {
 		    
 		    // if we're pressing a button, make sure to apply changes first
 		    if (ei.button == src && !ei.newDialog) {

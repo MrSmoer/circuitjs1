@@ -51,6 +51,13 @@ class EditInfo {
 	    return ei;
 	}
 	
+	static EditInfo createCheckbox2(String name, boolean flag) {
+	    // TODO wtf is going on here?
+	    EditInfo ei = new EditInfo("", 0, -1, -1);
+	    ei.checkbox2 = new Checkbox(name, flag);
+	    return ei;
+	}
+	
 	EditInfo setDimensionless() { dimensionless = true; return this; }
 	EditInfo disallowSliders() { noSliders = true; return this; }
 	int changeFlag(int flags, int bit) {
@@ -64,6 +71,7 @@ class EditInfo {
 	TextBox textf;
 	Choice choice;
 	Checkbox checkbox;
+	Checkbox checkbox2;
 	Button button;
 	EditDialogLoadFile loadFile = null; //if non-null, the button will open a file dialog
 	TextArea textArea;
@@ -76,6 +84,7 @@ class EditInfo {
 	// for slider dialog
 	TextBox minBox, maxBox, labelBox;
 	
+	// TODO fixup
 	boolean canCreateAdjustable() {
 	    return choice == null && checkbox == null && button == null && textArea == null &&
 			widget == null && !noSliders;

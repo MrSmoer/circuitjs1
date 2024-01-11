@@ -2,10 +2,11 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
 
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Label;
 import com.lushprojects.circuitjs1.client.CirSim;
 
-public abstract class Adjustable {
+public abstract class Adjustable implements Command{
     CircuitElm elm;
     double value;
     String labelText;

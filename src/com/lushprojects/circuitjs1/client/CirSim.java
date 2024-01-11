@@ -714,6 +714,7 @@ MouseOutHandler, MouseWheelHandler {
 	l.addStyleName("topSpace");
 
 	// was max of 140
+	// TODO what is 260?
 	verticalPanel.add( speedBar = new Scrollbar(Scrollbar.HORIZONTAL, 3, 1, 0, 260));
 
 	verticalPanel.add( l = new Label(Locale.LS("Current Speed")));
@@ -4683,7 +4684,7 @@ MouseOutHandler, MouseWheelHandler {
     
 //    public void mouseClicked(MouseEvent e) {
     public void onClick(ClickEvent e) {
-    	e.preventDefault();
+    	//e.preventDefault();
 //    	//IES - remove inteaction
 ////	if ( e.getClickCount() == 2 && !didSwitch )
 ////	    doEditMenu(e);
@@ -5379,7 +5380,7 @@ MouseOutHandler, MouseWheelHandler {
     	}
     	
     	// all other shortcuts are ignored when editing disabled
-    	if (noEditCheckItem.getState())
+    	if (noEditCheckItem.getState()|| true)
     	    return;
 
     	if ((t & Event.ONKEYDOWN)!=0) {

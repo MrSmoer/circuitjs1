@@ -103,10 +103,18 @@ class SliderDialog extends Dialog  {
 			// remove HTML
 			name = name.replaceAll("<[^>]*>", "");
 			ei.checkbox = new Checkbox(name, adj != null);
+			// TODO
+			ei.checkbox2 = new Checkbox(Locale.LS(ei.name.replaceAll("<[^>]*>", "")));
 			vp.insert(ei.checkbox, idx++);
+			vp.insert(ei.checkbox2, idx++);
                         ei.checkbox.addValueChangeHandler( new ValueChangeHandler<Boolean>() {
                             public void onValueChange(ValueChangeEvent<Boolean> e){
                                     itemStateChanged(e);
+                            }
+                        });
+                        ei.checkbox2.addValueChangeHandler( new ValueChangeHandler<Boolean>() {
+                            public void onValueChange(ValueChangeEvent<Boolean> e){
+                                itemStateChanged(e);
                             }
                         });
 
@@ -135,6 +143,8 @@ class SliderDialog extends Dialog  {
 				}
 				vp.insert(ch, idx++);
 			    }
+			    //TODO uncomment again
+			    
 			    vp.insert(new Label(Locale.LS("Min Value")), idx++);
 			    ei.minBox = new TextBox();
 			    vp.insert(ei.minBox, idx++);
@@ -186,6 +196,10 @@ class SliderDialog extends Dialog  {
 			    d = EditDialog.parseUnits(ei.maxBox.getText());
 			    adjScr.maxValue = d;
 			    adjScr.setSliderValue(ei.value);
+			}else if(adj instanceof AdjustableTextbox) {
+			    AdjustableTextbox adjtxt = (AdjustableTextbox) adj;
+			    adjtxt.value = ei.value;
+			    
 			}
 		    } catch (Exception e) { CirSim.console(e.toString()); }
 		}
@@ -209,9 +223,25 @@ class SliderDialog extends Dialog  {
 			adj.delete(sim);
 			sim.adjustables.remove(adj);
 		    }
+		    
 		    changed = true;
 		}
+		if (ei.checkbox2 == src) {
+		    apply();
+		    if (ei.checkbox2.getState()) {
+			AdjustableTextbox txt = new AdjustableTextbox(elm, i);
+			txt.labelText = ei.name.replaceAll(" \\(.*\\)$", "");
+			txt.createElement(sim, ei.value);
+			sim.adjustables.add(txt);
+		    } else {
+			// TODO this breaks
+			Adjustable adj = findAdjustable(i);
+			adj.delete(sim);
+			sim.adjustables.remove(adj);
+		    }
+		}
 		if (ei.choice == src) {
+		    // TODO fixup this mess for more than one adjustable type
 		    apply();
 		    Adjustable adj = findAdjustable(i);
 		    if (ei.choice.getSelectedIndex() == 0) {
@@ -230,6 +260,7 @@ class SliderDialog extends Dialog  {
 			    if (adji == adj)
 				continue;
 			    if (++ct == ei.choice.getSelectedIndex()) {
+				// TODO this does nothin
 				if(adji instanceof AdjustableScroll)
 				    adj.sharedAdjustable = (AdjustableScroll)adji;
 				else
@@ -242,6 +273,7 @@ class SliderDialog extends Dialog  {
 		}
 	    }
 	    if (changed) {
+		// TODO maybe we move reorderAdjustable int Adjustable
 		AdjustableScroll.reorderAdjustables();
 		clearDialog();
 		buildDialog();
