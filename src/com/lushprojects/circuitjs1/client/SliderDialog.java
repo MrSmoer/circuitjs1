@@ -188,10 +188,9 @@ class SliderDialog extends Dialog  {
 			CirSim.console("slidertext " + adj.labelText + " " + ei.labelBox);
 			if (adj.label != null)
 			    adj.label.setText(adj.labelText);
-			double d = EditDialog.parseUnits(ei.minBox.getText());
-			AdjustableScroll adjScr;
 			if (adj instanceof AdjustableScroll) {
-			    adjScr = (AdjustableScroll) adj;
+			    AdjustableScroll adjScr = (AdjustableScroll) adj;
+			    double d = EditDialog.parseUnits(ei.minBox.getText());
 			    adjScr.minValue = d;
 			    d = EditDialog.parseUnits(ei.maxBox.getText());
 			    adjScr.maxValue = d;

@@ -4383,10 +4383,14 @@ MouseOutHandler, MouseWheelHandler {
     		mouseElm=ce;
     		int i;
     		for (i = 0; i < adjustables.size(); i++) {
-    		    AdjustableScroll scr; 
+    		    Adjustable adj = adjustables.get(i);
     		    // TODO does this work?
-    		    if((scr = (AdjustableScroll)adjustables.get(i)) instanceof AdjustableScroll)
+    		    if(adj instanceof AdjustableScroll) {
+    			AdjustableScroll scr = (AdjustableScroll) adj;
+    			
     			scr.setMouseElm(ce);
+    		    }
+  
     		}
     	}
     }

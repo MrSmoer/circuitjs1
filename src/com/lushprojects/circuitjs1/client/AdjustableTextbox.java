@@ -6,6 +6,8 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -16,7 +18,7 @@ import com.lushprojects.circuitjs1.client.EditDialog;
 // TODO do we need to implement command in subclasses?
 public class AdjustableTextbox extends Adjustable implements Command{
     
-    TextBox textbox;
+    TextBoxWrapper textbox;
     AdjustableTextbox(CircuitElm ce, int item) {
 	super(ce, item);
     }
@@ -47,16 +49,18 @@ public class AdjustableTextbox extends Adjustable implements Command{
 	String boxcontent = elm.getUnitText(value, "");
 	sim.addWidgetToVerticalPanel(textbox = new TextBoxWrapper(this));
 	AdjustableTextbox tbx = this;
-	textbox.addChangeHandler( new ChangeHandler() {
-		public void onChange(ChangeEvent e){
-			Object src = e.getSource();
-			//boolean change = false;
-			//boolean applied = false;
-			//elm.setEditValue(editItem, ei);
-			tbx.execute();
-			
-			
-		}
+	// TODO maybe set the correct handlers
+	textbox.addKeyPressHandler( new KeyPressHandler () {
+	    
+	    @Override
+	    public void onKeyPress(KeyPressEvent e) {
+		Object src = e.getSource();
+		//boolean change = false;
+		//boolean applied = false;
+		//elm.setEditValue(editItem, ei);
+		tbx.execute();
+		
+	    }
 	});
 	textbox.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent e){
@@ -83,6 +87,7 @@ public class AdjustableTextbox extends Adjustable implements Command{
 	    // TODO Auto-generated catch block
 	    ei.value = 1;
 	}
+	elm.setEditValue(editItem, ei);
 	elm.sim.repaint();
 
     }
